@@ -7,9 +7,6 @@ import requests
 top_4 = []
 ups_cloud_update_ip = 'http://213.227.138.203:5555/update'
 
-#file = open("inout_0.4.txt", "a")
-#file.close()
-
 
 # cteni z karty
 def get_next_card():
