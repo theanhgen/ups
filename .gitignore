@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# log files of ups
+*.txt
+
+# mac folder DS
+*.DS_Store
+
 # Distribution / packaging
 .Python
 build/
