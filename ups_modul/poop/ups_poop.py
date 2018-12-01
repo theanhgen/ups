@@ -2,17 +2,20 @@
 
 import time
 import requests
+from phue import Bridge
+
+hue_toilet = 4
+
+b = Bridge('192.168.0.131')
 poop_ip = "http://213.227.138.203:5555/update_poop"
 
 def poop_zapis_on(time_on):
 	with open(poop_log, "a") as fp:
 		fp.write("POOP ON {}\n".format(time.strftime(time_format, time.localtime(time_on))))
 
-
 def poop_zapis_off(time_off):
 	with open(poop_log, "a") as fp:
 		fp.write("POOP OFF {}\n".format(time.strftime(time_format, time.localtime(time_off))))	  
-
 
 def poop_timer(time_on):
 	t2 = time.time()
@@ -38,13 +41,16 @@ def zapis_cloud(poop_status):
 time_format = "%d.%m.%Y %H:%M:%S"
 poop_log = "poop_log.txt"
 
+#get light status from hue bridge about the light from toilet
 def get_light_status():
-    '''
-    this will soon be replaced with phillips hue bridge query
-    '''
-    return 0
+    if b.get_light(hue_toilet, 'on') == True:
+        light_status = 1
+    else:
+        light_status = 0
+    return light_status
 
 poop_status = 0
+
 # Main loop
 while True:
     time.sleep(0.5)
@@ -53,7 +59,14 @@ while True:
         t1 = time.time()
         poop_zapis_on(t1)
         poop_status = 1
+        zapis_cloud(poop_status)
     elif light_status == 0 and poop_status == 1:
         t2 = poop_timer(t1)
         poop_zapis_off(t2)
         poop_status = 0
+        zapis_cloud(poop_status)
+
+
+if __name__ == "__main__":
+
+
