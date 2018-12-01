@@ -66,7 +66,3 @@ while True:
         poop_status = 0
         zapis_cloud(poop_status)
 
-
-if __name__ == "__main__":
-
-
