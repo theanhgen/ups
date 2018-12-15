@@ -6,7 +6,7 @@ from phue import Bridge
 
 hue_toilet = 4
 
-b = Bridge('192.168.1.202')
+b = Bridge('192.168.1.61')
 b.connect()
 
 poop_ip = "http://213.227.138.203:5555/update_poop"
