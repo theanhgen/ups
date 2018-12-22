@@ -3,9 +3,9 @@ import requests
 
 def roman_fn(card_status):
     if card_status['status'] == "OUT":
-        requests.post("0.0.0.0:5000/leave")
+        requests.post("http://0.0.0.0:5000/leave")
     else:
-        requests.post("0.0.0.0:5000/home")
+        requests.post("http://0.0.0.0:5000/home")
 
 ups_member_callback_dict = {
 "11111111225511112210104455772828": [roman_fn]
