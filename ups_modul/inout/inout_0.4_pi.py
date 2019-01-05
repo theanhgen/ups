@@ -1,6 +1,5 @@
 import time
 from ups_byt import *
-from write_oled import write_2l, write_4l, write_top4
 from evdev import InputDevice, ecodes
 from multiprocessing import Process, Value
 import requests
@@ -52,7 +51,6 @@ def zapis(dict_key, t_delta):
     elif key_status == "OUT":
         s1 = ("{}, byl{}s doma".format(key_name, ups_pohlavi[dict_key]))
     s2 = ("{}H {}M {}S!!".format(int(hodin), int(minut), int(vterin)))
-    write_2l(s1, s2)
     update_top_4(key_name)
     # top 4 posledni uzivatele
     to_print = []
@@ -66,7 +64,6 @@ def zapis(dict_key, t_delta):
         else:
             last = ""
         to_print.append("{:<6} {:<3} {}{}".format(list_name, member_status, time.strftime(hours_format, member_time), last))
-    write_top4(to_print)
 
 
 def zapis_txt(dict_key):
@@ -114,7 +111,6 @@ def led_loop():
             zapis_txt(input_card)
             zapis_cloud()
         else:
-            write_2l("neznamy clovek!!", "ALARM")
             continue
 
 
