@@ -1,5 +1,5 @@
 import time
-from ups_byt import *
+from anthill_data import *
 from evdev import InputDevice, ecodes
 from multiprocessing import Process, Value
 import requests
