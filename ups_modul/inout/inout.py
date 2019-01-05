@@ -3,8 +3,6 @@ from anthill_data import *
 from evdev import InputDevice, ecodes
 from multiprocessing import Process, Value
 import requests
-top_4 = []
-ups_cloud_update_ip = 'http://213.227.138.203:5555/update'
 
 user_fn_dict = {}
 
@@ -31,12 +29,6 @@ def casovac(dict_key):
 def novy_cas(dict_key, t_alfa):
     ups[dict_key]["time"] = t_alfa
 
-def update_top_4(key_name):
-    if key_name in top_4:
-        top_4.remove(key_name)
-    top_4.append(key_name)
-    if len(top_4) > 4:
-        top_4.pop(0)
     
 
 def zapis(dict_key, t_delta):
@@ -113,27 +105,6 @@ def led_loop():
         else:
             continue
 
-
-def zapis_cloud():
-    hours_format = "%H:%M:%S"
-    print("updating to cloud")
-    cur_home = []
-    for x in reversed(range(len(top_4))):
-        list_name = top_4[x]
-        member_card = ups_member_card[list_name]
-        member_status = ups[member_card]["status"]
-        member_time = ups[member_card]["time"]
-        if member_status == "IN":
-            cur_home.append((list_name, time.strftime(hours_format, member_time)))
-    if len(cur_home) == 0:
-        output_str = "No one is home right now!"
-    else:
-        output_str = "Currently there is:*"
-        for res in cur_home:
-            output_str += "{} ({})* ".format(res[0], res[1])
-        output_str += "at home"
-    print(output_str)
-    requests.post(ups_cloud_update_ip, data=output_str)
 
 
 if __name__ == "__main__":
