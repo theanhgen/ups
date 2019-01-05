@@ -17,19 +17,8 @@ def get_next_card():
             return result
 
 
-def casovac(dict_key):
-    key_time = ups[dict_key]["time"]
-    t = time.mktime(time.localtime())
-    t_alfa = time.mktime(key_time)
-    t_delta = t - t_alfa
-    t_alfa = time.localtime()
-    return t_alfa, t_delta
-
-
 def novy_cas(dict_key, t_alfa):
     ups[dict_key]["time"] = t_alfa
-
-    
 
 def zapis(dict_key, t_delta):
     hours_format = "%H:%M:%S"
@@ -43,19 +32,7 @@ def zapis(dict_key, t_delta):
     elif key_status == "OUT":
         s1 = ("{}, byl{}s doma".format(key_name, ups_pohlavi[dict_key]))
     s2 = ("{}H {}M {}S!!".format(int(hodin), int(minut), int(vterin)))
-    update_top_4(key_name)
     # top 4 posledni uzivatele
-    to_print = []
-    for x in reversed(range(len(top_4))):
-        list_name = top_4[x]
-        member_card = ups_member_card[list_name]
-        member_status = ups[member_card]["status"]
-        member_time = ups[member_card]["time"]
-        if x == 3:
-            last = "*"
-        else:
-            last = ""
-        to_print.append("{:<6} {:<3} {}{}".format(list_name, member_status, time.strftime(hours_format, member_time), last))
 
 
 def zapis_txt(dict_key):
@@ -63,9 +40,9 @@ def zapis_txt(dict_key):
     key_name = ups[dict_key]["name"]
     key_status = ups[dict_key]["status"]
     key_time = ups[dict_key]["time"]
-    file = open('inout_0.4.txt', "a")
-    file.write("{} {} {}\n".format(key_name, key_status , time.strftime(time_format, key_time)))
-    file.close()
+    f = open('inout_0.4.txt', "a")
+    f.write("{} {} {}\n".format(key_name, key_status , time.strftime(time_format, key_time)))
+    f.close()
 
 
 def setup(file_name='inout_0.4.txt'):
@@ -84,14 +61,12 @@ def setup(file_name='inout_0.4.txt'):
                 update_top_4(parse_name)
     zapis_cloud()
 
-def led_loop():
+def loop():
     while True:
         # input_card = input("kdo jsi?:")
         input_card = get_next_card()
         print(input_card) #aby se vědělo jaká karta se pípla
         if input_card in ups:
-            t_alfa, t_delta = casovac(input_card)
-            novy_cas(input_card, t_alfa)
             if ups[input_card]["status"] == "IN":
                 ups[input_card]["status"] = "OUT"
             elif ups[input_card]["status"] == "OUT":
@@ -100,8 +75,6 @@ def led_loop():
                 for fn in ups_member_callback_dict[input_card]:
                     fn(ups[input_card])
             zapis(input_card, t_delta)
-            zapis_txt(input_card)
-            zapis_cloud()
         else:
             continue
 
@@ -109,4 +82,4 @@ def led_loop():
 
 if __name__ == "__main__":
     setup()
-    led_loop()
+    loop()
