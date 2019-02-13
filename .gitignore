@@ -9,6 +9,9 @@ __pycache__/
 # log files of ups
 *.txt
 
+# anthill data
+anthill.py
+
 # mac folder DS
 *.DS_Store
 
