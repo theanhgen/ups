@@ -35,7 +35,6 @@ def get_next_card():
 # timer between inout
 def timer(user_key):
     user_time = anthill[user_key].time
-    print(user_time)
     t = time.mktime(time.localtime())
     t_new = time.mktime(user_time)
     t_delta = t - t_new
@@ -56,11 +55,11 @@ def inout(input_id):
 # logging the user data to txt log
 def log_txt(user_key):
     time_format = "%W %j %A %d.%m.%Y %H:%M:%S"
-    name = anthill[user_key].name
-    status = anthill[user_key].status
-    time = anthill[user_key].time
+    user_name = anthill[user_key].name
+    user_status = anthill[user_key].status
+    user_time = anthill[user_key].time
     f = open('anthill_inout_log.txt', "a")
-    f.write("{} {} {}\n".format(name, status , time.strftime(time_format, key_time)))
+    f.write("{} {} {}\n".format(user_name, user_status , time.strftime(time_format, user_time)))
     f.close()
 
 # main loop waiting for an user ID. updating user data
