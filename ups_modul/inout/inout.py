@@ -63,9 +63,9 @@ def log_txt(user_key):
     f.write("{} {} {}\n".format(names, status , time.strftime(time_format, key_time)))
     f.close()
 
-
 # main loop waiting for an user ID. updating user data
-def loop():hile True:
+def loop():
+    while True:
         # input_id = input("kdo jsi?:")
         input_id = get_next_card()
         print(input_id) #print the ID to console. for adding new user
