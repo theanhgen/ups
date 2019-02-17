@@ -4,41 +4,7 @@ from evdev import InputDevice, ecodes
 from multiprocessing import Process, Value
 
 
-# čtení z idetifikace
-def get_next_card():
-    device = InputDevice("/dev/input/event0")
-    input_id = ""
-    for event in device.read_loop():
-        if event.type == ecodes.EV_KEY:
-            input_id += str(event.code)
-        if input_id.endswith("2828"):
-            return input_id
-
-def zapis_lcd(dict_key, t_delta):
-    hours_format = "%H:%M:%S"
-    # key_name = ups[dict_key]["name"]
-    # key_status = ups[dict_key]["status"]
-    # key_time = ups[dict_key]["time"]
-    # hodin, zbytek = divmod(t_delta, 3600)
-    # minut, vterin = divmod(zbytek, 60)
-    # if key_status == "IN":
-    #     s1 = ("{}, byl{}s venku".format(key_name, ups_pohlavi[dict_key]))
-    # elif key_status == "OUT":
-    #     s1 = ("{}, byl{}s doma".format(key_name, ups_pohlavi[dict_key]))
-    # s2 = ("{}H {}M {}S!!".format(int(hodin), int(minut), int(vterin)))
-    # top 4 posledni uzivatele
-
-
-def zapis_txt(user_key):
-    time_format = "%W %j %A %d.%m.%Y %H:%M:%S"
-    name = anthill[user_key].name
-    status = anthill[user_key].status
-    time = anthill[user_key].time
-    f = open('anthill_inout_log.txt', "a")
-    f.write("{} {} {}\n".format(names, status , time.strftime(time_format, key_time)))
-    f.close()
-
-
+# setup of the script with parsing the log
 def setup(file_name='anthill_inout_log.txt'):
     parse_time_format = "%W %j %A %d.%m.%Y %H:%M:%S"
     with open(file_name) as fn:
@@ -48,17 +14,25 @@ def setup(file_name='anthill_inout_log.txt'):
             parse_status = parse_line[1]
             time_log = " ".join(parse_line[2:])
             parse_time_raw = time.strptime(time_log, parse_time_format)
-            if parse_name in anthill:
-                print(parse_name)
-                # user_key = anthill[parse_name]
-                # anthill[user_key].status = parse_status
-                # anthill[user_key].name = parse_time_raw
+            setup_user(parse_name, parse_status, parse_time_raw)
 
+# update user information from log for first run of the script
+def setup_user(parse_name, parse_status, parse_time_raw):
+    if parse_name in anthill_name:
+        anthill_name[parse_name].status = parse_status
+        anthill_name[parse_name].time = parse_time_raw
 
-# aktualizovat čas uživatele
-def new_time(user_key, t_new):
-    anthill[user_key].time = t_new
+# reading the user ID
+def get_next_card():
+    device = InputDevice("/dev/input/event0")
+    input_id = ""
+    for event in device.read_loop():
+        if event.type == ecodes.EV_KEY:
+            input_id += str(event.code)
+        if input_id.endswith("2828"):
+            return input_id
 
+# timer between inout
 def timer(user_key):
     user_time = anthill[user_key].time
     print(user_time)
@@ -68,28 +42,42 @@ def timer(user_key):
     t_new = time.localtime()
     return t_new, t_delta
 
+# update user new time
+def new_time(user_key, t_new):
+    anthill[user_key].time = t_new
 
+# inout switch
 def inout(input_id):
     if anthill[input_id].status == 'IN':
         anthill[input_id].status = 'OUT'
     elif anthill[input_id].status == 'OUT':
         anthill[input_id].status = 'IN'
 
+# logging the user data to txt log
+def log_txt(user_key):
+    time_format = "%W %j %A %d.%m.%Y %H:%M:%S"
+    name = anthill[user_key].name
+    status = anthill[user_key].status
+    time = anthill[user_key].time
+    f = open('anthill_inout_log.txt', "a")
+    f.write("{} {} {}\n".format(names, status , time.strftime(time_format, key_time)))
+    f.close()
 
-def loop():
-    while True:
+
+# main loop waiting for an user ID. updating user data
+def loop():hile True:
         # input_id = input("kdo jsi?:")
         input_id = get_next_card()
-        print(input_id) #aby se vědělo jaká karta se pípla
+        print(input_id) #print the ID to console. for adding new user
         if input_id in anthill:
             t_new, t_delta = timer(input_id)
             new_time(input_id, t_new)
             inout(input_id)
-            zapis_txt(input_id)
+            log_txt(input_id)
         else:
             continue
 
-
+# weird stuff
 if __name__ == "__main__":
     setup()
     loop()
