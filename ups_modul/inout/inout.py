@@ -60,7 +60,7 @@ def log_txt(user_key):
     status = anthill[user_key].status
     time = anthill[user_key].time
     f = open('anthill_inout_log.txt', "a")
-    f.write("{} {} {}\n".format(names, status , time.strftime(time_format, key_time)))
+    f.write("{} {} {}\n".format(name, status , time.strftime(time_format, key_time)))
     f.close()
 
 # main loop waiting for an user ID. updating user data
