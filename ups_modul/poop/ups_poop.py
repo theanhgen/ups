@@ -62,7 +62,6 @@ def poop_tweet(hours, minutes, seconds):
     poop_tweet = "someone pooped for {}H {}M {0:.2f}S".format(int(hours), int(minutes), seconds)
     return poop_tweet
 
-
 # pushing the tweet to twitter
 def push_tweet(poop_tweet):
     authenficate()
