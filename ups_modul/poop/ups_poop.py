@@ -2,7 +2,7 @@
 import time
 import requests
 from phue import Bridge
-from ups_whispers import *
+from ups_keys import *
 
 
 # conenct to HUE. press the button on the bridge
