@@ -25,7 +25,7 @@ def poop_off_log(time_off):
 def poop_timer(time_on):
     t2 = time.time()
     t_delta = t2 - time_on
-    print("kadil jsi {0:.2f}s".format(t_delta))
+    print("někdo kadil {0:.2f}s".format(t_delta))
     return t2, t_delta
 
 #get light status from hue bridge. the toiler light (actually the light socket)
@@ -59,7 +59,7 @@ def se_mi_ho(t_delta):
 
 # setting the string to push the tweet
 def poop_tweet(hours, minutes, seconds):
-    poop_tweet = "someone pooped for {}H {}M {:.2f}S".format(int(hours), int(minutes), seconds)
+    poop_tweet = "someone pooped for {}H {}M {0:.2f}S".format(int(hours), int(minutes), seconds)
     return poop_tweet
 
 
