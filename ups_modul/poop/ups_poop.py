@@ -59,7 +59,7 @@ def se_mi_ho(t_delta):
 
 # setting the string to push the tweet
 def poop_tweet(hours, minutes, seconds):
-    poop_tweet = "someone pooped for {}H {}M {0:.2f}S".format(int(hours), int(minutes), seconds)
+    poop_tweet = "someone pooped for {}H {}M {:.2f}S".format(int(hours), int(minutes), seconds)
     return poop_tweet
 
 # pushing the tweet to twitter
