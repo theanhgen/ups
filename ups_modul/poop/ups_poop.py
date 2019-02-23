@@ -59,13 +59,13 @@ def se_mi_ho(t_delta):
 
 # setting the string to push the tweet
 def poop_tweet(hours, minutes, seconds):
-    poop_tweet = "someone pooped for {}H {}M {:.2f}S".format(int(hours), int(minutes), seconds)
-    return poop_tweet
+    poop_tweet_time = "someone pooped for {}H {}M {:.2f}S".format(int(hours), int(minutes), seconds)
+    return poop_tweet_time
 
 # pushing the tweet to twitter
-def push_tweet(poop_tweet):
+def push_tweet(poop_tweet_time):
     authenficate()
-    api.update_status(poop_tweet)
+    api.update_status(poop_tweet_time)
 
 
 poop_status = 0
@@ -88,6 +88,6 @@ while True:
         poop_off_log(t2)
         cloud_log(poop_status)
         hours, minutes, seconds = se_mi_ho(t_delta)
-        poop_tweet = poop_tweet(hours, minutes, seconds)
-        push_tweet(poop_tweet)
+        poop_tweet_time = poop_tweet(hours, minutes, seconds)
+        push_tweet(poop_tweet_time)
         poop_status = 0
