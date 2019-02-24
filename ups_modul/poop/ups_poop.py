@@ -81,12 +81,12 @@ while True:
     if light_status == 1 and poop_status == 0:
         t1 = time.time()
         poop_on_log(t1)
-        cloud_log(poop_status)
+        # cloud_log(poop_status)
         poop_status = 1
     elif light_status == 0 and poop_status == 1:
         t2, t_delta = poop_timer(t1)
         poop_off_log(t2)
-        cloud_log(poop_status)
+        # cloud_log(poop_status)
         hours, minutes, seconds = se_mi_ho(t_delta)
         poop_tweet_time = poop_tweet(hours, minutes, seconds)
         push_tweet(poop_tweet_time)
