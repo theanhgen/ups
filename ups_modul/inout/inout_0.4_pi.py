@@ -93,7 +93,7 @@ def setup(file_name='inout_0.4.txt'):
                 ups[key_card]["status"] = parse_status
                 ups[key_card]["time"] = parse_time_raw
                 update_top_4(parse_name)
-    zapis_cloud()
+    # zapis_cloud()
 
 def led_loop():
     while True:
@@ -112,7 +112,7 @@ def led_loop():
                     fn(ups[input_card])
             zapis(input_card, t_delta)
             zapis_txt(input_card)
-            zapis_cloud()
+            # zapis_cloud()
         else:
             write_2l("neznamy clovek!!", "ALARM")
             continue
