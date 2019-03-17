@@ -107,9 +107,9 @@ def led_loop():
                 ups[input_card]["status"] = "OUT"
             elif ups[input_card]["status"] == "OUT":
                 ups[input_card]["status"] = "IN"
-            if input_card in ups_member_callback_dict:
-                for fn in ups_member_callback_dict[input_card]:
-                    fn(ups[input_card])
+            # if input_card in ups_member_callback_dict:
+            #     for fn in ups_member_callback_dict[input_card]:
+            #         fn(ups[input_card])
             zapis(input_card, t_delta)
             zapis_txt(input_card)
             # zapis_cloud()
