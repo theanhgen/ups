@@ -1,16 +1,15 @@
 import time
 import requests
 
-def roman_fn(card_status):
-    if card_status['status'] == "OUT":
-        requests.post("http://0.0.0.0:5000/leave")
-    else:
-        requests.post("http://0.0.0.0:5000/home")
+# def roman_fn(card_status):
+#     if card_status['status'] == "OUT":
+#         requests.post("http://0.0.0.0:5000/leave")
+#     else:
+#         requests.post("http://0.0.0.0:5000/home")
 
-ups_member_callback_dict = {
-"111111112255111133554444772828": [roman_fn]
-}
-111111112255111133554444772828
+# ups_member_callback_dict = {
+# "111111112255111133554444772828": [roman_fn]
+# }
 
 
 ups_member_card = {
