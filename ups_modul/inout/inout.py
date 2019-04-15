@@ -34,7 +34,7 @@ def get_next_card():
 
 # timer between inout
 def timer(user_key):
-    user_time = anthill[user_key].time
+    user_time = anthill_card[user_key].time
     t = time.mktime(time.localtime())
     t_new = time.mktime(user_time)
     t_delta = t - t_new
@@ -43,21 +43,21 @@ def timer(user_key):
 
 # update user new time
 def new_time(user_key, t_new):
-    anthill[user_key].time = t_new
+    anthill_card[user_key].time = t_new
 
 # inout switch
 def inout(input_id):
-    if anthill[input_id].status == 'IN':
-        anthill[input_id].status = 'OUT'
-    elif anthill[input_id].status == 'OUT':
-        anthill[input_id].status = 'IN'
+    if anthill_card[input_id].status == 'IN':
+        anthill_card[input_id].status = 'OUT'
+    elif anthill_card[input_id].status == 'OUT':
+        anthill_card[input_id].status = 'IN'
 
 # logging the user data to txt log
 def log_txt(user_key):
     time_format = "%W %j %A %d.%m.%Y %H:%M:%S"
-    user_name = anthill[user_key].name
-    user_status = anthill[user_key].status
-    user_time = anthill[user_key].time
+    user_name = anthill_card[user_key].name
+    user_status = anthill_card[user_key].status
+    user_time = anthill_card[user_key].time
     f = open('anthill_inout_log.txt', "a")
     f.write("{} {} {}\n".format(user_name, user_status , time.strftime(time_format, user_time)))
     f.close()
@@ -68,7 +68,7 @@ def loop():
         # input_id = input("kdo jsi?:")
         input_id = get_next_card()
         print(input_id) #print the ID to console. for adding new user
-        if input_id in anthill:
+        if input_id in anthill_card:
             t_new, t_delta = timer(input_id)
             new_time(input_id, t_new)
             inout(input_id)
