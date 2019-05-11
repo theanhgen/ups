@@ -11,6 +11,8 @@ __pycache__/
 
 # anthill data
 anthill.py
+ups_anthill_inout_google_drive.json
+
 
 # mac folder DS
 *.DS_Store
