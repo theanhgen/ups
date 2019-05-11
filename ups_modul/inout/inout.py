@@ -73,7 +73,6 @@ def insert_row(changes):
 def check_new_users(wks):
     old_list = parse_backup_list()
     changes = compare_lists(old_list, anthill_list)
-    print(changes)
     delete_row(changes)
     insert_row(changes)
     names_rows(wks)
