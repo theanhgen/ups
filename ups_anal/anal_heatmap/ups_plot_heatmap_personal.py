@@ -2,7 +2,7 @@ import time
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as pylot
-from ups_byt_test import *
+from ups_modul.inout.ups_byt import *
 from matplotlib import rcParams
 rcParams['font.family'] = 'sans-serif'
 rcParams['font.sans-serif'] = ['Roboto']

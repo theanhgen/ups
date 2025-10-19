@@ -196,7 +196,7 @@ def write_4l(text, text2, text3, text4):
     # Draw a black filled box to clear the image.
     draw.rectangle((0,0,width,height), outline=0, fill=0)
 
-    # Write two lines of text.
+    # Write four lines of text.
 
     draw.text((x, top),        text,  font=font, fill=255)
     draw.text((x, top+8),      text2, font=font, fill=255)
