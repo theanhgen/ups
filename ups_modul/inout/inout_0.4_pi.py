@@ -74,9 +74,8 @@ def zapis_txt(dict_key):
     key_name = ups[dict_key]["name"]
     key_status = ups[dict_key]["status"]
     key_time = ups[dict_key]["time"]
-    file = open('inout_0.4.txt', "a")
-    file.write("{} {} {}\n".format(key_name, key_status , time.strftime(time_format, key_time)))
-    file.close()
+    with open("inout_0.4.txt", "a", encoding="utf-8") as file:
+        file.write(f"{key_name} {key_status} {time.strftime(time_format, key_time)}\n")
 
 
 def setup(file_name='inout_0.4.txt'):
@@ -103,10 +102,9 @@ def led_loop():
         if input_card in ups:
             t_alfa, t_delta = casovac(input_card)
             novy_cas(input_card, t_alfa)
-            if ups[input_card]["status"] == "IN":
-                ups[input_card]["status"] = "OUT"
-            elif ups[input_card]["status"] == "OUT":
-                ups[input_card]["status"] = "IN"
+            ups[input_card]["status"] = (
+                "OUT" if ups[input_card]["status"] == "IN" else "IN"
+            )
             # if input_card in ups_member_callback_dict:
             #     for fn in ups_member_callback_dict[input_card]:
             #         fn(ups[input_card])
