@@ -1,4 +1,4 @@
-from ups_byt_test import *
+from ups_modul.inout.ups_byt import *
 import time
 file_name = 'inout_0.4_test.txt'
 

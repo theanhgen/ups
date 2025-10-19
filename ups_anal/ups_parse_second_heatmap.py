@@ -1,5 +1,5 @@
 import time
-from ups_byt_test import *
+from ups_modul.inout.ups_byt import *
 from datetime import timedelta
 
 

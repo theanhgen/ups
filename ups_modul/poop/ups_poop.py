@@ -5,7 +5,7 @@ from phue import Bridge
 from ups_keys import *
 
 
-# conenct to HUE. press the button on the bridge
+# connect to HUE. press the button on the bridge
 def connect_HUE(bridge_ip):
     b = Bridge(bridge_ip)
     b.connect()
@@ -63,31 +63,36 @@ def poop_tweet(hours, minutes, seconds):
     return poop_tweet_time
 
 # pushing the tweet to twitter
+api = None
+
+
 def push_tweet(poop_tweet_time):
-    authenficate()
+    global api
+    if api is None:
+        api = authenficate()
     api.update_status(poop_tweet_time)
 
 
-poop_status = 0
-b = connect_HUE(bridge_ip)
-api = authenficate()
+if __name__ == "__main__":
+    poop_status = 0
+    b = connect_HUE(bridge_ip)
+    api = authenficate()
 
-
-# main loop with sleep time 0.5 seconds
-# def poop_loop():
-while True:
-    time.sleep(0.5)
-    light_status = get_light_status(b)
-    if light_status == 1 and poop_status == 0:
-        t1 = time.time()
-        poop_on_log(t1)
-        # cloud_log(poop_status)
-        poop_status = 1
-    elif light_status == 0 and poop_status == 1:
-        t2, t_delta = poop_timer(t1)
-        poop_off_log(t2)
-        # cloud_log(poop_status)
-        hours, minutes, seconds = se_mi_ho(t_delta)
-        poop_tweet_time = poop_tweet(hours, minutes, seconds)
-        push_tweet(poop_tweet_time)
-        poop_status = 0
+    # main loop with sleep time 0.5 seconds
+    # def poop_loop():
+    while True:
+        time.sleep(0.5)
+        light_status = get_light_status(b)
+        if light_status == 1 and poop_status == 0:
+            t1 = time.time()
+            poop_on_log(t1)
+            # cloud_log(poop_status)
+            poop_status = 1
+        elif light_status == 0 and poop_status == 1:
+            t2, t_delta = poop_timer(t1)
+            poop_off_log(t2)
+            # cloud_log(poop_status)
+            hours, minutes, seconds = se_mi_ho(t_delta)
+            poop_tweet_time = poop_tweet(hours, minutes, seconds)
+            push_tweet(poop_tweet_time)
+            poop_status = 0
